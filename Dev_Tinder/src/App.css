@@ -1,0 +1,14 @@
+
+.sm{
+  font-weight: 400;
+  margin: 5px;
+  padding: 5px;
+  text-transform: capitalize;
+  cursor: pointer;
+  border: 2px solid black;
+}
+.lg{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
