@@ -1,14 +1,12 @@
-
-.sm{
-  font-weight: 400;
-  margin: 5px;
-  padding: 5px;
-  text-transform: capitalize;
-  cursor: pointer;
-  border: 2px solid black;
-}
-.lg{
+.main{
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* justify-content: center;
+  align-items: center; */
+  flex-direction: column;
+}
+.md{
+    width: 100px;
+    margin: 10px;
+  color: white;
+  border: 2px solid pink;
 }
