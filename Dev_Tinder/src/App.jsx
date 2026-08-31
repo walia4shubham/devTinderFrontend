@@ -8,7 +8,7 @@ import Footer from './components/Footer.jsx'
 import './index.css'
 import RoughWork from './components/RoughWork.jsx'
 import Feed from './components/Feed.jsx'
-import ProtectedRoute from './components/ProtectedRoute.jsx'
+import ProtectedRoute, { PublicRoute } from './components/ProtectedRoute.jsx'
 import RequestConnections from './components/RequestConnections.jsx'
 const App = () => {
   return (
@@ -17,12 +17,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={<SetDatas />} />
         <Route path="/todo" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<PublicRoute><SignUp /></PublicRoute>} />
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/roughWork" element={<RoughWork />} />
         <Route path='/feed' element={<ProtectedRoute><Feed/></ProtectedRoute>} />
-           <Route path="/requestConnections" element={<RequestConnections />} />
-        
+        <Route path="/requestConnections" element={<RequestConnections />} />
       </Routes>
       {/* <Footer /> */}
     </>

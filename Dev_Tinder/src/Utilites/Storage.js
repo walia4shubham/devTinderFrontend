@@ -1,3 +1,6 @@
 import Cookies from "js-cookie";
 
-export const isToken = Cookies.get("token");
+export const getToken = () => Cookies.get("token");
+export const isToken = () => Boolean(Cookies.get("token"));
+
+export default getToken;

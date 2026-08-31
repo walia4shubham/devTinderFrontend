@@ -4,21 +4,17 @@ import { useDispatch } from 'react-redux';
 import { addUser } from '../Utilites/UserSlice';
 import { useNavigate } from 'react-router';
 import Cookies from "js-cookie";
-import { isToken } from '../Utilites/Storage';
 import { toast } from 'react-toastify';
 const login = () => {
   const ref = useRef();
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  console.log(ref,'reffff')
-   const token = Cookies.get("token");
-  useEffect(() =>{
-    console.log(isToken,'isTokenisToken');
-    
-     if(isToken){
-      return navigate('/feed')
-     }
-  },[])
+
+  useEffect(() => {
+    if (Cookies.get("token")) {
+      navigate('/feed', { replace: true })
+    }
+  }, [navigate])
 
   const [loginData, setLoginDate] = useState({ email: 'lovedsdsds123@gmail.com', password: 'ab' })
   const handlelogin = async (e) => {

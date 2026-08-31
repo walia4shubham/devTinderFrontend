@@ -1,12 +1,26 @@
 import React from "react";
-import { Navigate } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import { useSelector } from "react-redux";
 
-const ProtectedRoute = ({ children }) => {
-  const user = useSelector((store) => store.user);
+const isAuthenticatedUser = (user) => Boolean(user?.emailId || user?.token || user?.id);
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
+export const ProtectedRoute = ({ children }) => {
+  const user = useSelector((store) => store.user);
+  const location = useLocation();
+
+  if (!isAuthenticatedUser(user)) {
+    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  }
+
+  return children;
+};
+
+export const PublicRoute = ({ children }) => {
+  const user = useSelector((store) => store.user);
+  const location = useLocation();
+
+  if (isAuthenticatedUser(user)) {
+    return <Navigate to={location.state?.from || "/feed"} replace />;
   }
 
   return children;
