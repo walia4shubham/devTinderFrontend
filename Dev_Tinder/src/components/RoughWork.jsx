@@ -1,29 +1,67 @@
-import React, { useMemo, useReducer, useState } from 'react'
-import useCounter from './useCounter'
-import { useLocation, useNavigate, useParams } from 'react-router'
+import axios from 'axios'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+
+import { acceptedConnection } from '../Utilites/AcceptedConnections.js';
 
 const RoughWork = () => {
-
- const navigate = useNavigate();
- const param = useParams();
- const loc = useLocation()
- console.log(param,'rammm',loc)
-
-  const reducer = (state,data) => {
-    if(data == 'increment'){
-      navigate('/signup')
-      return state+1
-    }else{
-      return state-1
+ const dispatch = useDispatch();
+ const acceptedSelector = useSelector((store) => store.acceptedConnection);
+    const getFeed = async () => {
+    try {
+      const connection = await axios.get('http://localhost:3000/user/cooneections', { withCredentials: true });
+      console.log(connection.data.data,'connection')
+     dispatch(acceptedConnection(connection?.data?.data))
+    } catch (e) {
+      console.log(e,'error')
+      toast.error(
+        e.response?.data?.message || "Something went wrong"
+      );
     }
-
   }
-  const [count,dispacth] = useReducer(reducer,0)
+  useEffect(() => {
+ 
+    getFeed()
+
+  }, [])
+
+  console.log(acceptedSelector,'acceptedSelector')
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      count: {count}
-      <button onClick={(e) =>{dispacth('increment')}}>Add</button>
-      <button onClick={(e) =>{dispacth('decrement')}}>Subtract</button>
+    <div>
+      {acceptedSelector && acceptedSelector.length ?  acceptedSelector.map((user) =>{
+      return <div
+            key={user._id}
+            className="bg-base-300 rounded-lg shadow-md p-5
+                       flex items-center gap-5"
+          >
+
+            {/* Profile Image */}
+            <div className="avatar">
+              <div className="w-16 h-16 rounded-full">
+                <img
+                  src={
+                    user.fromUserId.photoUrl ||
+                    "https://img.daisyui.com/images/profile/demo/yellingcat@192.webp"
+                  }
+                  alt={user.fromUserId.firstName}
+                />
+              </div>
+            </div>
+
+            {/* User Details */}
+            <div className="flex-1">
+              <h2 className="text-lg font-bold">
+                {user.fromUserId.firstName} {user.fromUserId.lastName}
+              </h2>
+
+              <p className="text-sm opacity-70">
+                {user.fromUserId.description}
+              </p>
+            </div>
+          </div>
+      })   :  'No recored Found'}
+      
     </div>
   )
 }

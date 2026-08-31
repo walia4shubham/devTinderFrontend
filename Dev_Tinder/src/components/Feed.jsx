@@ -17,6 +17,18 @@ const Feed = () => {
       );
     }
   }
+    const reviewing =async (type,id)=>{
+    console.log(type,id,'rammm',feedSelector)
+
+    // return null
+
+      const requestConnection = await axios.post(`http://localhost:3000/request/send/${type}/${id}`,{}, { withCredentials: true });
+      let filter = feedSelector.filter((data) =>{ return  data._id != id
+      })
+   dispatch(addfeed(filter))
+    console.log(requestConnection,'connection')
+
+  }
   useEffect(() => {
     if(!feedSelector){
       getFeed()
@@ -27,7 +39,7 @@ const Feed = () => {
   return (
     <div>
       <ToastContainer />
-      <CardComponent feedSelector={feedSelector} />
+      <CardComponent feedSelector={feedSelector} reviewing={reviewing}/>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const CardComponent = ({ feedSelector }) => {
+const CardComponent = ({ feedSelector,reviewing }) => {
   return (
     <div className="flex flex-wrap justify-center gap-6 p-6">
       {feedSelector && feedSelector.length > 0 ? (
@@ -31,13 +31,13 @@ const CardComponent = ({ feedSelector }) => {
                 </p>
 
                 <div className="card-actions justify-center mt-4">
-                  <button className="btn btn-primary">
-                    Ignore
-                  </button>
+             <button onClick={() =>reviewing('ignored',_id)} className="btn btn-primary">
+                Ignored
+              </button>
 
-                  <button className="btn btn-secondary">
-                    Interested
-                  </button>
+              <button onClick={() =>reviewing('interested',_id)} className="btn btn-secondary">
+                Interested
+              </button>
                 </div>
               </div>
             </div>
