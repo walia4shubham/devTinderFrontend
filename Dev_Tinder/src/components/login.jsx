@@ -1,8 +1,24 @@
-import React, { useState,useRef } from 'react'
+import React, { useState,useRef, useEffect } from 'react'
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../Utilites/UserSlice';
+import { useNavigate } from 'react-router';
+import Cookies from "js-cookie";
+import { isToken } from '../Utilites/Storage';
+import { toast } from 'react-toastify';
 const login = () => {
   const ref = useRef();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   console.log(ref,'reffff')
+   const token = Cookies.get("token");
+  useEffect(() =>{
+    console.log(isToken,'isTokenisToken');
+    
+     if(isToken){
+      return navigate('/feed')
+     }
+  },[])
 
   const [loginData, setLoginDate] = useState({ email: 'lovedsdsds123@gmail.com', password: 'ab' })
   const handlelogin = async (e) => {
@@ -13,8 +29,11 @@ const login = () => {
       const login = await axios.post('http://localhost:3000/login', {
         emailId: loginData.email, password: loginData.password
       },{ withCredentials: true });
-    } catch {
-
+      toast.success('succesfully loged in')
+  navigate('/feed')
+      dispatch(addUser(login?.data?.data))
+    } catch(e) {
+       console.log(e,'errorr')
     }
 
 
