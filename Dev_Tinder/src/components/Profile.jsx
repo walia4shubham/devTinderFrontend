@@ -44,7 +44,7 @@ const Profile = () => {
 
     try {
       const updateData = await axios.patch(
-        "http://localhost:3000/profile/edit",
+       `${import.meta.env.VITE_API_URL}/profile/edit`,
         profile,
         {
           withCredentials: true,

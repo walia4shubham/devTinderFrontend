@@ -27,7 +27,7 @@ const SignUp = () => {
 e.preventDefault();
     console.log(signUpdata,'signUpdata')
     try{
-    const saveData = await axios.post('http://localhost:3000/signUp',{...signUpdata})
+    const saveData = await axios.post( `${import.meta.env.VITE_API_URL}/signUp`,{...signUpdata})
     console.log(saveData,'saveData')
     toast.success('Your account has been created')
     navigate('/login')

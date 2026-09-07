@@ -22,7 +22,7 @@ const login = () => {
       ref.current.style.color = 'red'
       e.preventDefault()
       console.log(loginData)
-      const login = await axios.post('http://localhost:3000/login', {
+      const login = await axios.post( `${import.meta.env.VITE_API_URL}/login`, {
         emailId: loginData.email, password: loginData.password
       },{ withCredentials: true });
       toast.success('succesfully loged in')

@@ -12,7 +12,7 @@ const dispatch = useDispatch();
  const requestSelector = useSelector((store) => store.requestConnetions);
     const getFeed = async () => {
     try {
-      const requestConnection = await axios.get('http://localhost:3000/user/requests', { withCredentials: true });
+      const requestConnection = await axios.get( `${import.meta.env.VITE_API_URL}/user/request`, { withCredentials: true });
      dispatch(requestConnectionsUser(requestConnection?.data?.data))
     console.log(requestConnection,'connection')
     } catch (e) {
@@ -34,7 +34,7 @@ const dispatch = useDispatch();
 
     // return null
 
-      const requestConnection = await axios.patch(`http://localhost:3000/request/review/${type}/${id}`,{}, { withCredentials: true });
+      const requestConnection = await axios.patch( `${import.meta.env.VITE_API_URL}/request/review/${type}/${id}`,{}, { withCredentials: true });
       let filter = requestSelector.filter((data) =>{ return  data._id != id
       })
      dispatch(requestConnectionsUser(filter))

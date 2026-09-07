@@ -9,7 +9,7 @@ const Feed = () => {
  const feedSelector = useSelector((store) => store.feed);
   const getFeed = async () => {
     try {
-      const feed = await axios.get('http://localhost:3000/feed', { withCredentials: true });
+      const feed = await axios.get( `${import.meta.env.VITE_API_URL}/feed`, { withCredentials: true });
      dispatch(addfeed(feed?.data?.message))
     } catch (e) {
       toast.error(
@@ -22,7 +22,7 @@ const Feed = () => {
 
     // return null
 
-      const requestConnection = await axios.post(`http://localhost:3000/request/send/${type}/${id}`,{}, { withCredentials: true });
+      const requestConnection = await axios.post( `${import.meta.env.VITE_API_URL}/request/send/${type}/${id}`,{}, { withCredentials: true });
       let filter = feedSelector.filter((data) =>{ return  data._id != id
       })
    dispatch(addfeed(filter))

@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { acceptedConnection } from '../Utilites/AcceptedConnections.js';
+import { useNavigate } from 'react-router';
 
 const RoughWork = () => {
+  const navigate = useNavigate()
  const dispatch = useDispatch();
  const acceptedSelector = useSelector((store) => store.acceptedConnection);
     const getFeed = async () => {
     try {
-      const connection = await axios.get('http://localhost:3000/user/cooneections', { withCredentials: true });
+      const connection = await axios.get( `${import.meta.env.VITE_API_URL}/user/cooneections`, { withCredentials: true });
       console.log(connection.data.data,'connection')
      dispatch(acceptedConnection(connection?.data?.data))
     } catch (e) {
@@ -34,6 +36,7 @@ const RoughWork = () => {
             key={user._id}
             className="bg-base-300 rounded-lg shadow-md p-5
                        flex items-center gap-5"
+                       onClick={() =>navigate(`/chat/${user._id}`)}
           >
 
             {/* Profile Image */}
@@ -58,6 +61,7 @@ const RoughWork = () => {
               <p className="text-sm opacity-70">
                 {user.fromUserId.description}
               </p>
+              
             </div>
           </div>
       })   :  'No recored Found'}

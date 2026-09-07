@@ -25,7 +25,7 @@ const Navbar = () => {
   const getUser = async () => {
     try {
       const userData = await axios.get(
-        "http://localhost:3000/profileView",
+       `${import.meta.env.VITE_API_URL}/profileView`,
         {
           withCredentials: true,
         }
@@ -49,7 +49,7 @@ const Navbar = () => {
   const logout = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/logout",
+        `${import.meta.env.VITE_API_URL}/logout`,
         {},
         {
           withCredentials: true,
