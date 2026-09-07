@@ -12,7 +12,7 @@ const dispatch = useDispatch();
  const requestSelector = useSelector((store) => store.requestConnetions);
     const getFeed = async () => {
     try {
-      const requestConnection = await axios.get( `${import.meta.env.VITE_API_URL}/user/request`, { withCredentials: true });
+      const requestConnection = await axios.get( `${import.meta.env.VITE_API_URL}/user/requests`, { withCredentials: true });
      dispatch(requestConnectionsUser(requestConnection?.data?.data))
     console.log(requestConnection,'connection')
     } catch (e) {
