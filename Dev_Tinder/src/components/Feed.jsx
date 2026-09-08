@@ -39,6 +39,7 @@ const Feed = () => {
   return (
     <div>
       <ToastContainer />
+      <h1>DevTinder CI/CD Test 🚀</h1>
       <CardComponent feedSelector={feedSelector} reviewing={reviewing}/>
     </div>
   )
