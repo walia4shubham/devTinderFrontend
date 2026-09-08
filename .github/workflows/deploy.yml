@@ -1,4 +1,4 @@
-name: DevTinder Frontend CI
+name: DevTinder Frontend CI/CD
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     defaults:
@@ -22,3 +22,28 @@ jobs:
 
       - name: Build Application
         run: npm run build
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+
+          script: |
+            cd ~/devTinderFrontend
+
+            git pull origin master
+
+            cd Dev_Tinder
+
+            docker build --no-cache -t devtinder-frontend .
+
+            docker rm -f devtinder-frontend || true
+
+            docker run -d \
+              --name devtinder-frontend \
+              --network devtinder-network \
+              --restart unless-stopped \
+              -p 80:80 \
+              devtinder-frontend
